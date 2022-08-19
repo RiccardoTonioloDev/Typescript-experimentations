@@ -17,3 +17,4 @@ addAndHandle(10, 20, (result) => {
     console.log(result);
     return 1;
 });
+//# sourceMappingURL=functions.js.map
