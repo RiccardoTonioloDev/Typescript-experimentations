@@ -1,30 +1,30 @@
 "use strict";
-class Department {
-    constructor(name, id) {
-        this.name = name;
-        this.id = id;
-        this.employees = [];
-        this.name = name;
-        this.id = id;
+let add;
+add = (a, b) => {
+    return a + b;
+};
+class Person {
+    constructor(name) {
+        if (name) {
+            this.name = name;
+        }
     }
-    describe() {
-        console.log(`Department (${this.id}): ${this.name}`);
-    }
-    addEmployee(employee) {
-        this.employees.push(employee);
-    }
-    printEmployeeInformation() {
-        console.log('Number of employees: ' + this.employees.length);
-        console.log('Employees: ', this.employees);
+    greet(phrase) {
+        if (this.name) {
+            console.log(phrase + ' ' + this.name);
+        }
+        else {
+            console.log('Hi!');
+        }
     }
 }
-const accounting = new Department('Accounting', '1');
-accounting.addEmployee('Riccardo');
-accounting.addEmployee('Max');
-console.log(accounting);
-accounting.describe();
-accounting.printEmployeeInformation();
-const accountingCopy = {
-    name: 's',
-    describe: accounting.describe,
+let user1;
+user1 = {
+    name: 'Riccardo',
+    greet(phrase) {
+        console.log(phrase + ' ' + this.name);
+    },
 };
+let user2 = new Person();
+user1.greet('Hi, i am:');
+user2.greet('Hi, i am:');

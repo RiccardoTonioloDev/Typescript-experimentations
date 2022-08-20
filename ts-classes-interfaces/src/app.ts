@@ -1,50 +1,49 @@
-class Department {
-	//Al posto di definire in questo modo, possiamo andarlo a fare direttamente nel costruttore.
-	// private id: string;
-	// private name: string; //questo serve a TypeScript per dichiarare gli attributi
-	// //di una classe in modo esplicito, con i relativi tipi.
-	private employees: string[] = [];
+interface Named {
+	name?: string;
+	outPutName?: string;
+}
 
-	constructor(private name: string, private readonly id: string) {
-		this.name = name;
-		this.id = id;
+interface Greetable extends Named {
+	greet(phrase: string): void;
+}
+
+interface AddFn {
+	(a: number, b: number): number;
+}
+let add: AddFn;
+
+add = (a: number, b: number) => {
+	return a + b;
+};
+
+class Person implements Greetable {
+	name?: string;
+
+	constructor(name?: string) {
+		if (name) {
+			this.name = name;
+		}
 	}
 
-	describe(this: Department) {
-		console.log(`Department (${this.id}): ${this.name}`);
-	}
-
-	addEmployee(employee: string) {
-		this.employees.push(employee);
-	}
-
-	printEmployeeInformation() {
-		console.log('Number of employees: ' + this.employees.length);
-		console.log('Employees: ', this.employees);
+	greet(phrase: string): void {
+		if (this.name) {
+			console.log(phrase + ' ' + this.name);
+		} else {
+			console.log('Hi!');
+		}
 	}
 }
 
-const accounting = new Department('Accounting', '1');
-accounting.addEmployee('Riccardo');
-accounting.addEmployee('Max');
-console.log(accounting);
-accounting.describe();
-accounting.printEmployeeInformation();
+let user1: Greetable;
 
-const accountingCopy = {
-	// describe: accounting.describe.bind(accounting),
-	// //Bind mi permette di associare uno scope a una funzione.
-	// //In questo caso stiamo passando lo scope dell'oggetto accounting, e quindi
-	// //describe può accedere alla variabile name (presa da describe tramite this).
-	name: 's',
-	describe: accounting.describe,
+user1 = {
+	name: 'Riccardo',
+	greet(phrase: string) {
+		console.log(phrase + ' ' + this.name);
+	},
 };
 
-// accountingCopy.describe(); //Qui viene un errore poichè abbiamo specificato che
-//possiamo utilizzare la funzione describe solamente su degli oggetti di tipo
-//Departmente (guarda come abbiamo definito describe all'interno della classe).
+let user2 = new Person();
 
-// accountingCopy.describe(); //Qui invece funziona poichè abbiamo creato un oggetto
-//che rispetta gli stessi attributi definiti nella classe, e quindi è riconosciuto
-//come Department anche se non generato dal suo costruttore originale.
-//EDIT: non funziona più poichè abbiamo aggiunto altri attributi a Department.
+user1.greet('Hi, i am:');
+user2.greet('Hi, i am:');
